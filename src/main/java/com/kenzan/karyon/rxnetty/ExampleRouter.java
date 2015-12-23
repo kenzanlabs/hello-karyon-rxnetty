@@ -25,6 +25,7 @@ import rx.Observable;
 
 import com.kenzan.karyon.rxnetty.health.HealthCheck;
 import com.kenzan.karyon.rxnetty.resource.HelloResource;
+import com.kenzan.karyon.rxnetty.resource.IndexResource;
 
 
 public class ExampleRouter implements RequestHandler<ByteBuf, ByteBuf>{
@@ -36,6 +37,7 @@ public class ExampleRouter implements RequestHandler<ByteBuf, ByteBuf>{
         HealthCheck healthCheckHandler = new HealthCheck();
 
         delegate
+        .addUri("", new IndexResource())
         .addUri("/hello/*", new HelloResource())
         .addUri("/healthcheck", new HealthCheckEndpoint(healthCheckHandler));
     }
