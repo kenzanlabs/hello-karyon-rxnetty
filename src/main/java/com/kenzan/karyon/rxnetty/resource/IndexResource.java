@@ -56,7 +56,7 @@ public class IndexResource implements RequestHandler<ByteBuf, ByteBuf>{
                         } catch (Exception e){
                             e.printStackTrace();
                         }
-                        response.writeString("<h2>Spinnaker Hello World Application</h2><h3>Instance Id" + instanceId + "</h3>");
+                        response.writeString("Instance Id " + instanceId + "</h3>");
                         return response.close();
                     }
                 });
