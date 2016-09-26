@@ -7,6 +7,7 @@ SLEEP=${WAIT_TIME:-35}
 DOCKER_RUN="docker run -i -t"
 
 build() {
+  gradle packDeb -x test
   docker build -t ${GCR_TAG} -f Dockerfile .
 }
 
@@ -22,9 +23,9 @@ run() {
   echo ${BASE_DIR}
   docker run \
     -it \
-    -v ${BASE_DIR}/build/distributions:/home/spinnaker/distributions/ \
-    $GCR_TAG \
-    /bin/bash
+    -p 8080:8080 \
+    -v ${BASE_DIR}/armory:/home/armory/armory \
+    $GCR_TAG
 }
 
 deploy() {
@@ -101,7 +102,7 @@ case $OPT in
       build
       ;;
     run)
-      build && run
+      run
       ;;
     shell)
       shell

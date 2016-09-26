@@ -1,13 +1,11 @@
-FROM java:8
+FROM java:7
 
 MAINTAINER isaac@armory.io
 
-COPY . workdir/
+COPY build/distributions/ workdir/
 
 WORKDIR workdir
 
-RUN GRADLE_USER_HOME=cache ./gradlew packDeb -x test
+RUN dpkg -i *.deb
 
-RUN dpkg -i ./build/distributions/*.deb
-
-CMD ["java -jar /opt/hello-karyon-rxnetty/hello-karyon-rxnetty*.jar"]
+CMD ["java", "-jar", "/opt/hello-karyon-rxnetty/hello-karyon-rxnetty-all-0.1.0.jar"]
