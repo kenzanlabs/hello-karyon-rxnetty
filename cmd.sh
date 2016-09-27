@@ -7,7 +7,7 @@ SLEEP=${WAIT_TIME:-35}
 DOCKER_RUN="docker run -i -t"
 
 build() {
-  gradle packDeb -x test
+  ./gradlew packDeb -x test
   docker build -t ${GCR_TAG} -f Dockerfile .
 }
 
