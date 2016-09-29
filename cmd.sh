@@ -7,6 +7,8 @@ SLEEP=${WAIT_TIME:-35}
 DOCKER_RUN="docker run -i -t"
 VERSION_TAG="${BUILD_NUMBER:-latest}"
 
+echo "BUILD NUMBER IS: ${BUILD_NUMBER}"
+
 build() {
   ./gradlew packDeb -x test
   docker build -t ${VERSION_TAG} -t ${GCR_TAG} -f Dockerfile .
