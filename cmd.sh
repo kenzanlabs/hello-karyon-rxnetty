@@ -5,10 +5,13 @@ APP_NAME="hello-karyon-rxnetty"
 GCR_TAG=gcr.io/cloud-armory/${APP_NAME}
 SLEEP=${WAIT_TIME:-35}
 DOCKER_RUN="docker run -i -t"
+VERSION_TAG="${BUILD_NUMBER:-latest}"
+echo "#####"
+echo ${VERSION_TAG}
 
 build() {
   ./gradlew packDeb -x test
-  docker build -t ${GCR_TAG} -f Dockerfile .
+  docker build -t ${VERSION_TAG} -t ${GCR_TAG} -f Dockerfile .
 }
 
 test() {
