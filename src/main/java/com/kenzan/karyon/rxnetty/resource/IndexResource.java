@@ -50,16 +50,22 @@ public class IndexResource implements RequestHandler<ByteBuf, ByteBuf>{
                     @Override
                     public Observable<Void> call(String body) {
                         String instanceId = "";
-                        String userdata = "";
+                        String detail = "";
+                        String cluster = "";
+                        String stack = "";
+                        String server_group = "";
 
                         try{
                             instanceId = execCmd("curl http://metadata/computeMetadata/v1/instance/id -H Metadata-Flavor:Google") + execCmd("wget -q -O - http://instance-data/latest/meta-data/instance-id");
-                            userdata = System.getenv("USERDATA");
+                            detail = System.getenv("CLOUD_DETAIL");
+                            cluster = System.getenv("CLOUD_CLUSTER");
+                            stack = System.getenv("CLOUD_STACK");
+                            server_group = System.getenv("CLOUD_SERVER_GROUP");
 
                         } catch (Exception e){
                             e.printStackTrace();
                         }
-                        response.writeString("<html><head><style>body{text-align:center;font-family:'Lucida Grande'}</style></head><body><img src='http://blog.armory.io/content/images/2016/06/Cloud_Armory_icon.png' /><h2>Example Spinnaker Application</h2><h3>$USERDATA ENV VAR: " + userdata + "</h3><h3>Instance Id " + instanceId + "</h3></body></html>");
+                        response.writeString("<html><head><style>body{text-align:center;font-family:'Lucida Grande'}</style></head><body><img src='http://blog.armory.io/content/images/2016/06/Cloud_Armory_icon.png' /><h2>Example Spinnaker Application</h2><h3> Cluster:" + cluster + "</h3><h3>" + server_group + "</h3><h3> Stack:" + stack + "</h3><h3>Environment/Detail: " + detail + "</h3><h3>Instance Id " + instanceId + "</h3></body></html>");
                         return response.close();
                     }
                 });
