@@ -33,7 +33,7 @@
         "type": "shell",
         "inline": [
           "sudo apt-get install -y chef",
-          "cd /etc/chef && sudo chef-client --local -o recipe['unattended-upgrades']"
+          "cd /etc/chef && sudo chef-client --local -o recipe['helloworld']"
         ]
       }
     ]
