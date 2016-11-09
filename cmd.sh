@@ -9,8 +9,6 @@ VERSION_TAG="${BUILD_NUMBER:-latest}"
 
 echo "BUILD NUMBER IS: ${VERSION_TAG}"
 
-set -x
-
 build() {
   ./gradlew packDeb -x test
   docker build -t ${GCR_TAG}:${VERSION_TAG} -f Dockerfile .
