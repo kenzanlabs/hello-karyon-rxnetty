@@ -78,6 +78,8 @@ usage() {
     echo "$0 [build|cd|container|clean|run|shell|deploy|push|test]"
 }
 
+echo "running cmd.sh in dir: ${BASE_DIR}"
+
 [ $# -lt 1 ] && usage && exit 1
 OPT=$1
 
