@@ -1,0 +1,40 @@
+{
+  "builders": [
+  {
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "us-west-2",
+    "source_ami": "ami-01f05461",
+    "instance_type": "m4.large",
+    "ssh_username": "ubuntu",
+    "ami_name": "hello-karyon-spinnaker-{{timestamp}}",
+    "ami_groups": "all",
+    "run_tags": {
+      "Name": "hello-karyon-packer"
+    }
+  }
+  ],
+
+  "provisioners": [
+      {
+        "type": "shell",
+        "inline": [
+          "sudo mkdir -p /etc/chef && sudo chown -R ubuntu:ubuntu /etc/chef",
+          "sudo mkdir -p /tmp/packer-chef-client && sudo chown -R ubuntu:ubuntu /tmp/packer-chef-client"
+        ]
+      },
+      {
+        "type": "file",
+        "source": "{{pwd}}/cookbooks",
+        "destination": "/etc/chef/cookbooks"
+      },
+      {
+        "type": "shell",
+        "inline": [
+          "sudo apt-get install -y chef",
+          "cd /etc/chef && sudo chef-client --local -o recipe['helloworld']"
+        ]
+      }
+    ]
+}

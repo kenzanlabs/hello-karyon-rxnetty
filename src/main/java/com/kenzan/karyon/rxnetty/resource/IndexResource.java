@@ -50,16 +50,19 @@ public class IndexResource implements RequestHandler<ByteBuf, ByteBuf>{
                     @Override
                     public Observable<Void> call(String body) {
                         String instanceId = "";
-                        String userdata = "";
+                        String detail = "";
+                        String cluster = "";
+                        String stack = "";
+                        String server_group = "";
+                        String all_env = "";
 
                         try{
                             instanceId = execCmd("curl http://metadata/computeMetadata/v1/instance/id -H Metadata-Flavor:Google") + execCmd("wget -q -O - http://instance-data/latest/meta-data/instance-id");
-                            userdata = System.getenv("USERDATA");
-
+                            all_env = execCmd("curl http://169.254.169.254/latest/user-data");
                         } catch (Exception e){
                             e.printStackTrace();
                         }
-                        response.writeString("<html><head><style>body{text-align:center;font-family:'Lucida Grande'}</style></head><body><img src='http://kenzan.com/wp-content/themes/kenzan/images/logo-reg.png' /><h2>Example Spinnaker Application</h2><h3>Instance Id " + instanceId + "</h3><h3>$USERDATA ENV VAR: " + userdata + "</h3></body></html>");
+                        response.writeString("<html><head><style>body{text-align:center;font-family:'Lucida Grande'}</style></head><body><img src='http://blog.armory.io/content/images/2016/06/Cloud_Armory_icon.png' /><h2>Awesome Example Spinnaker Application</h2></h3><pre>\" + all_env + \"</pre></h3><h3>Instance Id " + instanceId + "</h3></body></html>");
                         return response.close();
                     }
                 });

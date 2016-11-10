@@ -1,0 +1,32 @@
+{
+  "name": "unattended-upgrades",
+  "version": "0.1.2",
+  "description": "Installs/Configures unattended-upgrades",
+  "long_description": "# unattended-upgrades cookbook\n\nThis cookbook configures the unattended-upgrades package which performs automatic package updates on debian systems.\n\nBuild status:\n\n[![Build Status](https://travis-ci.org/jeremyolliver/cookbook-unattended-upgrades.png?branch=master)](https://travis-ci.org/jeremyolliver/cookbook-unattended-upgrades)\n\nCI automatically runs linting and unit tests. You may also run more thorough integration tests via Vagrant as well. See below for details on how to do that.\n\n# Requirements\n\nDebian or Ubuntu Operating System and the `apt` cookbook\n\n# Usage\n\nSimply include the cookbook \"unattended-upgrades\". Common config that you may want to change:\n\n`node['unattended-upgrades']['admin_email']` Defaults to `'root@localhost'` Set to nil to disable email notification, or any other external email\n\n`node['unattended-upgrades']['allowed_origins']`\n\nDefault value (at default precedence) is:\n\n    {\n      'security'  => true,\n      'updates'   => false,\n      'proposed'  => false,\n      'backports' => false\n    }\n\nYou can change this to enable non-critical updates by setting in a role or environment:\n\n    \"default_attributes\": {\n      \"unattended-upgrades\": {\n        \"allowed_origins\": {\n          \"updates\": true\n        }\n      }\n    }\n\nPlease note that if you set your own changes at an `override` precedence, then the two hashes will not be merged together, and the full list should be specified again. e.g. alternately:\n\n    \"override_attributes\": {\n      \"unattended-upgrades\": {\n        \"allowed_origins\": {\n          \"security\":  true,\n          \"updates\":   true,\n          \"proposed\":  false,\n          \"backports\": false\n        }\n      }\n    }\n\nTODO: Third party PPA's are not yet supported in the allowed origins section\n\n`node['unattended-upgrades']['mail_only_on_error']` Set this to `true` if you want to skip mails for successful updates, however it can be helpful for troubleshooting to have a record of when packages were updated if you need to correlate when an error started occurring with the time packages were updated.\n\n`node['unattended-upgrades']['minimal_steps']` Set this to `true` if you expect to be able to reboot the server with minimal interruption and the updates might be running at the time. With this left on the default value of false, the server will wait for all updates to complete before shutting down. See the full attributes list and the comments in the template file for more information. This cookbook has strived to provide configurable attributes for as many options as possible to allow maximum flexibility.\n\n# Attributes\n\n* `['unattended-upgrades']['admin_email']`\n* `['unattended-upgrades']['package_blacklist']`\n* `['unattended-upgrades']['autofix_dpkg']`\n* `['unattended-upgrades']['minimal_steps']`\n* `['unattended-upgrades']['install_on_shutdown']`\n* `['unattended-upgrades']['mail_only_on_error']`\n* `['unattended-upgrades']['remove_unused_dependencies']`\n* `['unattended-upgrades']['automatic_reboot']`\n* `['unattended-upgrades']['download_limit']`\n* `['unattended_upgrades']['update_package_lists_interval']`\n* `['unattended_upgrades']['upgrade_interval']`\n* `['unattended_upgrades']['download_upgradeable_interval']`\n* `['unattended_upgrades']['autoclean_interval']`\n\n# Recipes\n\n`unattended-upgrades::default`\n\n# Cookbook Development\n\nRunning the tests for this cookbook involves:\n\nRequires:\n* ruby 1.9.2+\n* bundler (`gem install bundler` and `bundle install`)\n* Vagrant 1.2+ (and Virtualbox)\n* `vagrant plugin install vagrant-berkshelf`\n\nRun the lint tests via: `bundle exec rake style`. Run the full integration tests via: `bundle exec kitchen converge all` and `bundle exec kitchen verify all`. To remove the VM's `bundle exec kitchen destroy all`\n\n# Author\n\nAuthor:: Jeremy Olliver (<jeremy.olliver@gmail.com>)\n",
+  "maintainer": "Jeremy Olliver",
+  "maintainer_email": "jeremy.olliver@gmail.com",
+  "license": "Apache 2.0",
+  "platforms": {
+    "ubuntu": ">= 0.0.0"
+  },
+  "dependencies": {
+    "apt": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+    "unattended-upgrades::default": ">= 0.0.0"
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  }
+}
