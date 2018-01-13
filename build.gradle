@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: "com.github.hierynomus.license"
 apply plugin: 'nebula.ospackage-base'
+apply plugin: 'com.palantir.git-version'
 
 sourceCompatibility = 1.7
 
@@ -23,6 +24,7 @@ buildscript {
     dependencies {
         classpath "gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.12.1"
         classpath 'com.netflix.nebula:gradle-ospackage-plugin:3.1.0'
+        classpath 'com.palantir.gradle.gitversion:gradle-git-version:0.10.1'
     }
 }
 
@@ -72,7 +74,7 @@ task packDeb(type: Deb, dependsOn: fatJar) {
 
   packageName = project.name
   version = '1'
-  release '1'
+  release versionDetails().gitHash
 
   requires('openjdk-7-jre-headless')
   from('build/libs/.') {
